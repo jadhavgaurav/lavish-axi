@@ -317,12 +317,12 @@ For flows, architecture, state, or sequence diagrams, open the diagram playbook 
 
 The npm release sends anonymous usage telemetry to an [Umami](https://umami.is) server at `https://a.kunchenguid.com`. The host and website ID are baked into the published bundle at build time, so telemetry is on by default for `npx -y lavish-axi`.
 
-Each `lavish-axi` run sends two requests, except `lavish-axi --version`, which sends none: a page view when the command starts, and a `command` event when it finishes. Both carry:
+Each `lavish-axi` run sends two requests, except `lavish-axi --version` (also `-v` and `-V`), which sends none: a page view when the command starts, and a `command` event when it finishes. Both carry:
 
 - the command name (for example `open`, `poll`, or `home` when you run it with no command), but not its arguments, file paths, artifact content, or prompts
 - the Lavish version, `process.platform`, and `process.arch`
 
-The `command` event also records whether the command ended in `success` or `error`. No user identifier is sent. Requests time out after 1 second, and failures are ignored, so telemetry never changes what a command does.
+The `command` event also carries a `status` field: `success`, or `error` only when the CLI itself throws. A command that fails and sets a nonzero exit code is handled by the CLI framework, so it still reports `success`. No user identifier is sent. Requests time out after 1 second, and failures are ignored, so telemetry never changes what a command does.
 
 Set `LAVISH_AXI_TELEMETRY=0` (or `false` or `off`) to turn it off. A build from source sends nothing unless `LAVISH_AXI_UMAMI_WEBSITE_ID` is set, and `LAVISH_AXI_UMAMI_HOST` overrides the host.
 
