@@ -112,7 +112,8 @@ test("home help names LAVISH_AXI_ALLOWED_HOSTS for the 403 forbidden host case",
   assert.ok(hostHelp, "home help names the allowlist variable");
   assert.match(hostHelp, /403 `forbidden host`/);
   assert.match(hostHelp, /reverse-proxy/);
-  assert.match(hostHelp, /whitespace-separated/);
+  assert.match(hostHelp, /README's Allowed hosts section/);
+  assert.doesNotMatch(hostHelp, /whitespace-separated/);
   assert.match(hostHelp, /`lavish-axi stop`/);
 });
 
